@@ -1,16 +1,34 @@
-# This is a sample Python script.
+# TO DO: 234У
+# I
+# 1. Пустой телеграмм бот с командой /start
+# 2. Подключить проект к github
+# II
+# 1. Сделать развертывание на raspberry, т.е. autoupdate с github
+# (Выпустила коммит, запушила - обновление погрузилось на raspberry и развернулось)
+# 2. Создание бд как сущность объект-класс
+# Table user {id (default инкримент), tg_id, permission}
+# Table files {id, key_tg, blob_file, type(webm, mp4, etc}
+# III
+# 1. Добавить команду /load, после которой включается состояние впитывания файлов, отправка blob в бд (! Не ключей от телеграмма). Команда /end заканчивает состояние впитывания файлов
+# IV
+# 1. Корутина на отправку файлов, причем в 3 канала, все это тестить на левом канале
+# V
+# 1. Написать простой html+css+js лендинг jinja2 шаблоном. Сервер - Flask
+# 2. Server. Превратить это в localserver, порт придумать, желательно покрасивее и проверить на свободу пора
+# 3. На сервере добавить авторизацию по login pass с permission просмотр бд в видео самих файлов (подгружать в браузер файлы для просмотра)
+# VI
+# 1. Статистика каналов
+from aiogram import Bot, Dispatcher, executor, types
+from config import API_TOKEN
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+bot = Bot(token=API_TOKEN)
+dp = Dispatcher(bot)
 
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+@dp.message_handler(commands=['start'])
+async def send_welcome(message: types.Message):
+    await message.reply("Привет!")
 
 
-# Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    print_hi('PyCharm')
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+    executor.start_polling(dp, skip_updates=True)
