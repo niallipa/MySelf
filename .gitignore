@@ -3,3 +3,4 @@
 /testing/
 config.py
 database.db
+__pycache__
